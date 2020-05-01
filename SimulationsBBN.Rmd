@@ -19,7 +19,7 @@ knitr::opts_chunk$set( message = FALSE, warning = FALSE, echo = FALSE)
 # Simulations framework 
 ## Initialization
 
-We use some standard packages for doing the simulations. These packages can be downloaded simply by uncommenting the first lines of the next code chunk.
+We use standard packages for doing the simulations. These packages can be downloaded simply by uncommenting the first lines of the next code chunk.
 
 ```{r packages}
 
@@ -35,9 +35,9 @@ library(stargazer)
 
 ```
  
-We created several functions for 
-* computing utility (CRRA and CPT) and 
-* for computing the optimal input use and risk premium in different cases. 
+We created several functions for: 
+* computing utility (CRRA and CPT), and 
+* computing the optimal input use and risk premium in different cases. 
 The functions are defined in a separate R file that must be loaded. 
 
 ```{r}
@@ -46,7 +46,7 @@ source("GlobalFunctions.R")
 
 
 
-To account for uncertainty in the empirical analysis to follow we assume that the random shock follows a standardized normal distribution and we derive the discrete analogue of the continuous N(0,1) by considering 1,000 normally distributed $\epsilon_i$ (i=1, 2 … 1000) over a large support.
+To account for uncertainty in the empirical analysis to follow we assume that the random shock follows a standardized normal distribution and we derive the discrete analogue of the continuous N(0,1) by considering 1,000 normally distributed $\epsilon_i$ (i=1, 2 … 1000).
 
 ### Simulation parameters
 
@@ -68,9 +68,9 @@ we consider possible values for $x$ varying from 1 to 400 EUR for one hectare.
 suppmin <- 0
 suppmax <- 400  # Defines the length of the support for inputs [0, suppmax]
 
-Ns <- 400     # Number of points of the computaion grid for the integral
+Ns <- 400     # Number of points of the computation grid for the integral
 x <- as.data.frame(seq(from = suppmin, to = suppmax, length.out = Ns+1 ))
-x<- x[-1,]  #  to avoid start at x=0
+x<- x[-1,]  #  to avoid starting at x=0
 
 df<- data.frame(x)
 df.final <- df
@@ -85,10 +85,10 @@ with a, b $\gt 0$, $\alpha \gt 0$ , $\beta \lt 0$ and $\epsilon$ a random shock 
 
 ### Production function parameters
 
-The parameters of the production function (for the benchmark scenario) were chosen such that the function fits real production data from France; that is: 
+The parameters of the production function (for the benchmark scenario) were chosen such that the function fits real production data; that is: 
 
 ```{r ProdParameters, echo = TRUE}
-# Production function parameters (Benchmark) - [ values may be changed here]
+# Production function parameters (Benchmark) - [values may be changed here]
 
 c0 <- 0
 a <-  15
@@ -98,14 +98,14 @@ beta <- -0.10
 ```
 
 ```{r}
-#Text for output 
+# Text for output 
 text.param.prod <-  paste0("Production function y =", ifelse(c0 == 0, "",paste(c0," + ")),
                           a," * x**", alpha, " +",b,"* x**",beta," * eps" )
 ```
 
 ### Profit parameters
 
-Output is wheat and is measured in quintal (1 q = 0.1 t = 100 kg). We set the price of wheat (p) at 110 EUR/t or, equivalently, 11 EUR/q. We also definie the initial wealth, $w_0$ to be set at 500 EUR. The price of inputs is normalized to one.
+Output is wheat and is measured in quintal (1 q = 0.1 t = 100 kg). We set the price of wheat (p) at 110 EUR/t or, equivalently, 11 EUR/q. We also set the initial wealth, $w_0$, at 500 EUR. The input price is normalized to one.
 
 ```{r ProfParameters,   echo = TRUE  }
 # Profit function parameters [values can be changed here]
@@ -181,7 +181,7 @@ EProf.star <- df.plot[i.star, "MeanProf"]
 In Table 1 we report the optimal level of input use, the risk premium, and the certainty equivalent (all measured in EUR for one hectare) under the risk neutrality assumption (rr = 0) and under risk aversion for four different levels of the coefficient of relative risk aversion (rr = 1, 2, 3 and 4). 
 
 ```{r  LoopRisk , echo = TRUE }
-# The table 1 is constructed as a single loop  
+# Table 1 is constructed as a single loop  
 # over a list of risk aversion parameter values: [values can be changed here]
 r.list <- c(0,1,2,3,4)
 
@@ -190,7 +190,7 @@ r.list <- c(0,1,2,3,4)
 **Table 1**
 
 ```{r Table1 , include = TRUE, echo = FALSE, cache  = FALSE}
-# Initialising the result's data frame 
+# Initializing the results data frame 
 res.CRRA<- data.frame()
 
 # We loop on the value of the parameter representing the coefficient of relative risk aversion
@@ -274,7 +274,7 @@ stargazer(res.CRRA,
 # values considered for the price ratio, py, are: 
 py.list <- c(13, 11, 9, 7)
 
-# Inner loop : 
+# Inner loop: 
 # The list of risk aversion parameter values is the same as in Table 1
 
 ```
@@ -563,11 +563,11 @@ prof.max <- round(max(df.ExpectedProf0),0)
 ## Optimal quantity of input used and risk premium under various CPT scenarios
 
 ```{r LoopCPT, echo = TRUE }
-# Table 4 is constructed as a double loop: [values can be changed here]
+# Table 4 is constructed as a double loop [values can be changed here]
 
 # First Loop: 
 # CPT scenarios definition
-# Parameter values are (resp.): rr+, rr- ,lamda, gamma and delta
+# Parameter values are (resp.): rr+, rr- ,lambda, gamma and delta
 scenarios <-      data.frame(c(0.12,0.12,2.25, 0.61,0.69 )) #Scenario 0 (KT)
 scenarios <- cbind(scenarios,c(0.12,0.12,2.25, 0.61,0.30 )) #Scenario 1
 scenarios <- cbind(scenarios,c(0.88,0.12,2.25, 0.61,0.69 )) #Scenario 2
@@ -663,7 +663,7 @@ stargazer(Simu.Output,
 ## Sensitivity of input use and risk premium to pesticides-crop price ratio – CPT framework
 
 ```{r loopPriceCPT, echo = TRUE}
-# Table 5 is constructed as a double loop: [values can be changed here]
+# Table 5 is constructed as a double loop [values can be changed here]
 
 # First Loop: 
 # CPT Scenarios definition
@@ -705,7 +705,7 @@ for (j in 1:ncol(scenarios) )  {
   # looping over price ratio, py
   for (i in seq_along(py.list)) {
 
-    # Curent price ratio
+    # Current price ratio
     py <- py.list[i]
     # Current risk-neutral optimum X0* for current price ratio py
     x0.star.py <- x.star.py[which( x.star.py$`price ratio` == py),2]
@@ -939,8 +939,8 @@ w0.list <- c(500, 1000, 1500, 5000)
 # risk aversion parameters as in Tables 1, 2 and 3
 r.list <- c(0,1,2,3,4)
 
-#Invariant (in this simulation) parameters
-#production function are as in Benchmark case
+# Invariant (in this simulation) parameters
+# Production function as in benchmark case
 c0 <- 0
 a <- 15
 alpha <- 0.30
@@ -1030,7 +1030,7 @@ for (j in seq_along(w0.list))  {
     ###  Certainty equivalent
     CE <- df.final[i.star,"EProf"] - RP
     
-    ## Puting results in table for current risk parameter and initial wealth values
+    ## Putting results in table for current risk parameter and initial wealth values
     
     res.CRRA[ 1, paste0("r = ",r.list[i.r])] <- round(x.star, digits = 0)
     res.CRRA[ 2, paste0("r = ",r.list[i.r])] <-  round(delta.x, digits = 2)

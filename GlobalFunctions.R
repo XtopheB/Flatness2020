@@ -91,7 +91,7 @@ resultsKT <- function(df.profit,
   # Expected profit 
   df.ExpectedProf = rowSums(df.ProbProfMat)
   
-  ### ---  Computing Pi's [Notations refers to BABCOCK (2015)] 
+  ### ---  Computing Pi's [Notations refer to BABCOCK (2015)] 
   
   # Gain and loss dummy probabilities 
   df.Iloss <- as.data.frame(ifelse(df.profMat < 0,1,0 ))
@@ -136,8 +136,8 @@ resultsKT <- function(df.profit,
   
   pi.gain <- cbind( pi.gain, pi.gainEnd)
   
-  ###  Applying probablities of gains and losses to resp. cells (matrix of dummies)
-  df.pi <- (pi.loss * df.Iloss) + (pi.gain * df.Igain)  # term to term multiplication with zero-one matrices
+  ###  Applying probabilities of gains and losses to resp. cells (matrix of dummies)
+  df.pi <- (pi.loss * df.Iloss) + (pi.gain * df.Igain)  # term-to-term multiplication with zero-one matrices
 
   # Applying KT Utility to profits
   df.Util <- purrr::map_df(df.profMat, U.KT, 
@@ -156,7 +156,7 @@ resultsKT <- function(df.profit,
   df.final$EUKT <-  rowSums(df.EUCPTMAT,  na.rm=T)
   ##  very important to remove the NA, otherwise the rowsum is not working
   
-  ## Retrieving the index of the maximum;  
+  ## Retrieving the index of the maximum  
   i.star <- which.max(df.final$EUKT)
   x.star  <- df.final[i.star,"x"]
   EU.star <- df.final[i.star, "EUKT"]
